@@ -1,16 +1,12 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 
-function Home() {
+const Home = () => {
     return (
-        <div>
-            <h3>Home</h3>
-            {/* <ul>
-                <Link to="/sponsor">
-                    <li>sponsor</li>
-                </Link>
-            </ul> */}
+        <div className="App">
+            <h1>Home</h1>
+            <button>r공지사항 바로가기</button>
         </div>
     );
-}
+};
+
 export default Home;

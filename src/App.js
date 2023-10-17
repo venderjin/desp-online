@@ -1,13 +1,10 @@
-import "./App.css";
 import React from "react";
-// import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import Home from "./Home";
-// import Sponsor from "./Sponsor";
+import Main from "./Main";
 
 const App = () => {
     return (
         <div className="App">
-            <h1>sdfsd</h1>
+            <Main />
         </div>
     );
 };
