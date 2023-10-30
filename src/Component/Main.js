@@ -84,8 +84,6 @@ const Main = () => {
         // backgroundColor: "white",
     };
 
-    console.log(width, height);
-
     return (
         <div style={containerBackStyle}>
             <div style={containerStyle}></div>
