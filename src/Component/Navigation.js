@@ -23,30 +23,88 @@ const Navigation = () => {
             window.removeEventListener("resize", updateNavHeight);
         };
     }, []);
-    console.log(navHeight / 6);
-    const navBarStyle = {
-        height: navHeight > 600 ? `${navHeight / 6}px` : "100px",
-        borderBottom: "2px solid white", // 아래 테두리를 흰색으로 설정
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    };
 
     //nav 버튼 클릭 시 페이지 이동
-    const buttons = [
-        { label: "Announcement", path: "/Announcement" },
-        { label: "Character", path: "/Character" },
-        { label: "Home", path: "/" },
-        { label: "Ranking", path: "/Ranking" },
-        { label: "UserSearch", path: "/UserSearch" },
-        { label: "Donation", path: "/Donation" },
+    const buttonsLeft = [
+        { label: "공지사항", path: "/Announcement" },
+        { label: "캐릭터 가이드", path: "/Character" },
+    ];
+    const buttonsHome = [{ label: "Home", path: "/" }];
+    const buttonsRight = [
+        { label: "랭킹", path: "/Ranking" },
+        { label: "유저 검색", path: "/UserSearch" },
+        { label: "후원", path: "/Donation" },
     ];
     const navigate = useNavigate();
 
+    // 현재 활성 버튼을 추적하는 상태
+    const [activeButton, setActiveButton] = useState("Home");
+    const handleButtonClick = (buttonLabel, path) => {
+        setActiveButton(buttonLabel);
+        navigate(path);
+    };
+
+    const navBarStyle = {
+        marginTop: "20px",
+        height: navHeight > 600 ? `${navHeight / 6}px` : "100px",
+        borderBottom: "1px solid white", // 아래 테두리를 흰색으로 설정
+        display: "flex",
+        justifyContent: "space-around", // 버튼 사이의 여백을 동일하게 설정
+        alignItems: "center",
+        paddingBottom: "10px",
+    };
+
+    const navBtnStyle = {
+        height: navHeight > 600 ? `${navHeight / 8}px` : "80px",
+        backgroundColor: "transparent", // 배경색을 투명으로 설정
+        color: "white", // 텍스트 색상을 흰색으로 설정
+        border: "none", // 테두리 제거
+        cursor: "pointer", // 커서 스타일 변경
+        fontSize: "25px", // 글자 크기 설정
+        fontWeight: "thin", // 기본 글씨체보다 가벼운 글씨체로 설정
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        textAlign: "center",
+        fontFamily: "NotoSansKR, sans-serif",
+    };
     return (
         <div ref={navRef} style={navBarStyle}>
-            {buttons.map((button, index) => (
-                <button key={index} onClick={() => navigate(button.path)}>
+            {buttonsLeft.map((button, index) => (
+                <button
+                    key={index}
+                    style={{
+                        ...navBtnStyle,
+                        fontWeight: activeButton === button.label ? "bold" : "normal",
+                    }}
+                    onClick={() => handleButtonClick(button.label, button.path)}
+                >
+                    {button.label}
+                </button>
+            ))}
+            {buttonsHome.map((button, index) => (
+                <img
+                    key={index}
+                    src="https://despbukkit.s3.ap-northeast-2.amazonaws.com/desp-online+logo.png" // 이미지 경로를 설정
+                    alt="Home"
+                    onClick={() => handleButtonClick(button.label, button.path)}
+                    style={{
+                        width: navHeight > 600 ? `${navHeight / 8}px` : "80px",
+                        height: navHeight > 600 ? `${navHeight / 8}px` : "80px",
+                        fontWeight: activeButton === button.label ? "bold" : "normal",
+                    }}
+                />
+            ))}
+            {buttonsRight.map((button, index) => (
+                <button
+                    key={index}
+                    style={{
+                        ...navBtnStyle,
+                        fontWeight: activeButton === button.label ? "bold" : "normal",
+                    }}
+                    onClick={() => handleButtonClick(button.label, button.path)}
+                >
                     {button.label}
                 </button>
             ))}
