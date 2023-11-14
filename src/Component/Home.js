@@ -40,7 +40,6 @@ const Home = () => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
-        marginBottom: contentsHeight * 0.1,
     };
     const HomeAnnouncementStyle = {
         width: contentsWidth * 0.32,

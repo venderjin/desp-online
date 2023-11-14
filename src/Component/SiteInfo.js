@@ -20,7 +20,7 @@ const SiteInfo = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        marginTop: "2rem",
+        marginTop: "4rem",
         paddingTop: "1rem",
         paddingLeft: "1rem",
         marginBottom: "3rem",
