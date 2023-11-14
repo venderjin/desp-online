@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../CSS/Contents.css";
+import { Ranking, Announcement } from "../Constants/HomeConstants";
+import SiteInfo from "./SiteInfo";
 
 const Home = () => {
     //navBar 사이즈 설정
@@ -29,7 +31,7 @@ const Home = () => {
 
     const HomeBannerStyle = {
         height: contentsHeight * 0.2,
-        backgroundColor: "skyblue",
+        backgroundColor: "#FCD99A",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -38,6 +40,7 @@ const Home = () => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
+        marginBottom: contentsHeight * 0.1,
     };
     const HomeAnnouncementStyle = {
         width: contentsWidth * 0.32,
@@ -56,7 +59,7 @@ const Home = () => {
     };
     const HomeAnnouncementBoxStyle = {
         marginBottom: contentsHeight * 0.01,
-        height: contentsHeight * 0.15,
+        height: contentsHeight > 700 ? contentsHeight * 0.12 : contentsHeight * 0.14,
         backgroundColor: "rgba(255, 255, 255, 0.7",
         display: "flex",
         alignItems: "center",
@@ -73,7 +76,7 @@ const Home = () => {
             <div style={HomeInfoStyle}>
                 <div style={HomeAnnouncementStyle}>
                     <div style={HomeAnnouncementText}>
-                        <p style={HomeText}>실시간 TOP3 랭킹</p>
+                        <p style={HomeText}>{Ranking.name}</p>
                     </div>
                     <div style={HomeAnnouncementBoxStyle}>
                         <h3>1위</h3>
@@ -87,13 +90,14 @@ const Home = () => {
                 </div>
                 <div style={HomeAnnouncementStyle}>
                     <div style={HomeAnnouncementText}>
-                        <p style={HomeText}>공지사항</p>
+                        <p style={HomeText}>{Announcement.name}</p>
                     </div>
                     <div style={HomeAnnouncementBoxStyle}>
                         <h3>1위</h3>
                     </div>
                 </div>
             </div>
+            <SiteInfo />
         </div>
     );
 };

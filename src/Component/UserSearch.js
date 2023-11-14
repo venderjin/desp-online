@@ -1,10 +1,58 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
+import SiteInfo from "./SiteInfo";
 
 const UserSearch = () => {
+    const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
+    const [contentsWidth, setContentsWidth] = useState(100); // 초기 너비를 100으로 설정
+    const contentsRef = useRef(null);
+
+    useEffect(() => {
+        const updateSize = () => {
+            const newHeight = window.innerHeight; // 현재 브라우저 창의 높이
+            const newWidth = window.innerWidth; // 현재 브라우저 창의 너비
+            setContetnsHeight(newHeight); // 높이 업데이트
+            setContentsWidth(newWidth); // 너비 업데이트
+        };
+
+        // 컴포넌트가 마운트될 때 사이즈 설정
+        updateSize();
+
+        // 브라우저 창의 크기가 변경될 때 사이즈 다시 설정
+        window.addEventListener("resize", updateSize);
+
+        return () => {
+            // 컴포넌트가 언마운트될 때 이벤트 리스너 삭제
+            window.removeEventListener("resize", updateSize);
+        };
+    }, []);
+
+    const userSearchBarLayout = {
+        // backgroundColor: "green",
+        height: contentsHeight > 500 ? contentsHeight * 0.13 : 65,
+        display: "flex",
+        alignItems: "flex-end",
+        justifyContent: "center",
+    };
+
+    const userSearchBar = {
+        width: contentsWidth > 700 ? contentsWidth * 0.5 : 350,
+        height: contentsHeight > 500 ? contentsHeight * 0.08 : 40,
+        backgroundColor: "transparent",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderBottom: "1px solid white", // 아래 테두리를 흰색으로 설정
+    };
     return (
-        <div className="App">
-            <h1>UserSearch</h1>
-            <button>UserSearch 바로가기</button>
+        <div ref={contentsRef} className="contents">
+            <div style={userSearchBarLayout}>
+                <div style={userSearchBar}>
+                    유저 검색창 넓이 {contentsWidth}
+                    높이 {contentsHeight}
+                </div>
+            </div>
+            <div>유저 검색확인</div>
+            <SiteInfo />
         </div>
     );
 };

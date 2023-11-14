@@ -34,6 +34,7 @@ const Navigation = () => {
             // 컴포넌트가 언마운트될 때 이벤트 리스너 삭제
             window.removeEventListener("resize", updateSize);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
