@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import "../CSS/Contents.css";
 import SiteInfo from "./SiteInfo";
 
 const UserSearch = () => {
@@ -6,6 +7,10 @@ const UserSearch = () => {
     const [contentsWidth, setContentsWidth] = useState(100); // 초기 너비를 100으로 설정
     const contentsRef = useRef(null);
 
+    const [search, setSearch] = useState("");
+    const onChange = (e) => {
+        setSearch(e.target.value);
+    };
     useEffect(() => {
         const updateSize = () => {
             const newHeight = window.innerHeight; // 현재 브라우저 창의 높이
@@ -46,12 +51,9 @@ const UserSearch = () => {
     return (
         <div ref={contentsRef} className="contents">
             <div style={userSearchBarLayout}>
-                <div style={userSearchBar}>
-                    유저 검색창 넓이 {contentsWidth}
-                    높이 {contentsHeight}
-                </div>
+                <input type="text" value={search} onChange={onChange} style={userSearchBar} placeholder="유저 닉네임을 검색해주세요" />
             </div>
-            <div>유저 검색확인</div>
+            {/* <div>유저 검색확인</div> */}
             <SiteInfo />
         </div>
     );
