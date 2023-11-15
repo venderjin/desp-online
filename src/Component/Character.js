@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
 import "../CSS/Character.css";
-import { CharacterConfirmedImgSrc, CharacterUnconfirmedImgSrc } from "../Constants/CharacterConstants";
+import { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3 } from "../Constants/CharacterConstants";
 
 const Character = () => {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
@@ -86,10 +86,10 @@ const Character = () => {
 
     return (
         <div ref={contentsRef} className="contents">
-            <div style={characterImgLayout}>
-                {Object.keys(CharacterConfirmedImgSrc).map((characterName) => (
+            <div style={{ ...characterImgLayout, textAlign: "center" }}>
+                {Object.keys(CharacterImgSrc_1).map((characterName) => (
                     <div
-                        style={{ position: "relative" }}
+                        style={{ position: "relative", overflow: "hidden" }}
                         class="img_box"
                         key={characterName}
                         onMouseEnter={() => handleMouseEnter(characterName)}
@@ -97,10 +97,10 @@ const Character = () => {
                     >
                         <div class="img_box__overlay">
                             <img
-                                src={CharacterConfirmedImgSrc[characterName]}
+                                src={CharacterImgSrc_1[characterName]}
                                 alt={characterName}
-                                width={contentsWidth > 700 ? contentsWidth * 0.2 : 140}
-                                height={contentsWidth > 500 ? contentsWidth * 0.14 : 98}
+                                width={"90%"}
+                                height={"100%"}
                                 style={hoveredCharacter === characterName ? isHovered : isUnHovered}
                             />
                         </div>
@@ -108,10 +108,13 @@ const Character = () => {
                     </div>
                 ))}
             </div>
-            <div style={characterImgLayout}>
-                {Object.keys(CharacterUnconfirmedImgSrc).map((characterName) => (
+            <div style={{ ...characterImgLayout, textAlign: "center" }}>
+                {Object.keys(CharacterImgSrc_2).map((characterName) => (
                     <div
-                        style={{ position: "relative" }}
+                        style={{
+                            position: "relative",
+                            overflow: "hidden",
+                        }}
                         class="img_box"
                         key={characterName}
                         onMouseEnter={() => handleMouseEnter(characterName)}
@@ -119,10 +122,35 @@ const Character = () => {
                     >
                         <div class="img_box__overlay">
                             <img
-                                src={CharacterUnconfirmedImgSrc[characterName]}
+                                src={CharacterImgSrc_2[characterName]}
                                 alt={characterName}
-                                width={contentsWidth > 700 ? contentsWidth * 0.2 : 140}
-                                height={contentsWidth > 500 ? contentsWidth * 0.14 : 98}
+                                width={"90%"}
+                                height={"100%"}
+                                style={{
+                                    ...(hoveredCharacter === characterName && characterName !== "EMPTY" ? isHovered : isUnHovered),
+                                    opacity: characterName === "EMPTY" ? 0 : 1,
+                                }}
+                            />
+                        </div>
+                        <p style={hoveredCharacter === characterName && characterName !== "EMPTY" ? isTextHovered : isTextUnHovered}>{characterName}</p>
+                    </div>
+                ))}
+            </div>
+            <div style={{ ...characterImgLayout, textAlign: "center" }}>
+                {Object.keys(CharacterImgSrc_3).map((characterName) => (
+                    <div
+                        style={{ position: "relative", overflow: "hidden" }}
+                        class="img_box"
+                        key={characterName}
+                        onMouseEnter={() => handleMouseEnter(characterName)}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <div class="img_box__overlay">
+                            <img
+                                src={CharacterImgSrc_3[characterName]}
+                                alt={characterName}
+                                width={"90%"}
+                                height={"100%"}
                                 style={hoveredCharacter === characterName ? isHovered : isUnHovered}
                             />
                         </div>
