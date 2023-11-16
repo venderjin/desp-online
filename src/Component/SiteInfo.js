@@ -17,8 +17,6 @@ const SiteInfo = (props) => {
     const handleMouseOut_Youtube = () => {
         setIsHoveringYoutube(false);
     };
-    console.log("width : " + props.width);
-    console.log("height : " + props.height);
 
     const discord_color = isHoveringDiscord ? "#5865f2" : "gray";
     const youtube_color = isHoveringYoutube ? "#ff0000" : "gray";

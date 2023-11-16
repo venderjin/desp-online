@@ -36,7 +36,6 @@ const Home = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "green",
     };
     const HomeInfoStyle = {
         display: "flex",
@@ -58,7 +57,7 @@ const Home = () => {
     const HomeText = {
         paddingRight: contentsWidth * 0.015,
         color: "white", // 텍스트 색상을 흰색으로 설정
-        fontSize: "1.1rem", // 텍스트 크기를 1.5rem으로 설정
+        fontSize: contentsWidth > 1100 ? "23px" : contentsWidth > 900 ? "20px" : contentsWidth > 700 ? "15px" : "13px", // 글자 크기 설정
     };
     const HomeAnnouncementBoxStyle = {
         marginBottom: contentsHeight * 0.01,

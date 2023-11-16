@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
+import Modal from "react-modal";
+
 import { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3 } from "../Constants/CharacterConstants";
 
 const Character = () => {
@@ -28,15 +30,25 @@ const Character = () => {
     }, []);
 
     const [hoveredCharacter, setHoveredCharacter] = useState(null);
-
     const handleMouseEnter = (characterName) => {
         setHoveredCharacter(characterName);
     };
-
     const handleMouseLeave = () => {
         setHoveredCharacter(null);
     };
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [openCharacter, setOpenCharacter] = useState(null); // 캐릭터 이름을 저장할 상태 변수
+
+    const openModal = (clickedCharacterName) => {
+        setModalOpen(true);
+        setOpenCharacter(clickedCharacterName); // 캐릭터 이름 저장
+    };
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    //css
     const characterImgLayout = {
         paddingTop: contentsHeight > 500 ? contentsHeight * 0.05 : 25,
         // backgroundColor: "red",
@@ -68,7 +80,7 @@ const Character = () => {
         opacity: 1,
         transitionDuration: "1s",
         transitionTimingFunction: "ease",
-        fontSize: contentsWidth > 700 ? contentsWidth * 0.015 : 10,
+        fontSize: contentsWidth > 700 ? contentsWidth * 0.013 : 10,
         fontWeight: "bold",
     };
 
@@ -80,6 +92,8 @@ const Character = () => {
         color: "white",
         opacity: 0,
         transitionDuration: "1s",
+        fontSize: contentsWidth > 700 ? contentsWidth * 0.013 : 10,
+        fontWeight: "bold",
         transitionTimingFunction: "ease",
     };
 
@@ -94,7 +108,7 @@ const Character = () => {
                         onMouseEnter={() => handleMouseEnter(characterName)}
                         onMouseLeave={handleMouseLeave}
                     >
-                        <div class="img_box__overlay">
+                        <div class="img_box__overlay" onClick={() => openModal(characterName)}>
                             <img
                                 src={CharacterImgSrc_1[characterName]}
                                 alt={characterName}
@@ -131,7 +145,9 @@ const Character = () => {
                                 }}
                             />
                         </div>
-                        <p style={hoveredCharacter === characterName && characterName !== "EMPTY" ? isTextHovered : isTextUnHovered}>{characterName}</p>
+                        <p style={hoveredCharacter === characterName && characterName !== "EMPTY" ? isTextHovered : isTextUnHovered}>
+                            {characterName === "UNKNOWN1" ? "Comming Soon..." : characterName}
+                        </p>
                     </div>
                 ))}
             </div>
@@ -153,7 +169,7 @@ const Character = () => {
                                 style={hoveredCharacter === characterName ? isHovered : isUnHovered}
                             />
                         </div>
-                        <p style={hoveredCharacter === characterName ? isTextHovered : isTextUnHovered}>{characterName}</p>
+                        <p style={hoveredCharacter === characterName ? isTextHovered : isTextUnHovered}>Comming Soon...</p>
                     </div>
                 ))}
             </div>
