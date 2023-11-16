@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IconContext } from "react-icons";
 import { AiOutlineMenu } from "react-icons/ai";
 
 const Navigation = () => {
@@ -204,12 +203,7 @@ const Navigation = () => {
                                     cursor: "pointer", // 커서 스타일 변경
                                 }}
                             >
-                                <IconContext.Provider
-                                    value={{ color: "white", className: "navMenu-icon", size: navWidth > 600 ? 40 : navWidth > 500 ? 35 : 30 }}
-                                >
-                                    <AiOutlineMenu />
-                                </IconContext.Provider>
-                                ;
+                                <AiOutlineMenu className="navMenu-icon" size={navWidth > 600 ? 40 : navWidth > 500 ? 35 : 30} color="white" />
                             </button>
                         </div>
                     </div>

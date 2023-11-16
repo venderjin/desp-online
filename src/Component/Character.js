@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
-import Modal from "react-modal";
+import { AiOutlineClose } from "react-icons/ai";
+import YouTube from "react-youtube";
 
-import { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3 } from "../Constants/CharacterConstants";
+import { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3, CharacterPlayVideo } from "../Constants/CharacterConstants";
 
 const Character = () => {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
@@ -38,20 +39,22 @@ const Character = () => {
     };
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [openCharacter, setOpenCharacter] = useState(null); // 캐릭터 이름을 저장할 상태 변수
+    const [chracterYoutubeKey, setchracterYoutubeKey] = useState(null);
 
     const openModal = (clickedCharacterName) => {
         setModalOpen(true);
-        setOpenCharacter(clickedCharacterName); // 캐릭터 이름 저장
+        setchracterYoutubeKey(CharacterPlayVideo[clickedCharacterName]);
     };
     const closeModal = () => {
         setModalOpen(false);
+        var div = document.getElementById(chracterYoutubeKey);
+        var iframe = div.getElementsByTagName("iframe")[0].contentWindow;
+        iframe.postMessage('{"event":"command","func":"stopVideo","args":""}', "*");
     };
 
     //css
     const characterImgLayout = {
         paddingTop: contentsHeight > 500 ? contentsHeight * 0.05 : 25,
-        // backgroundColor: "red",
         display: "flex",
         justifyContent: "space-evenly",
         alignItems: "center",
@@ -96,83 +99,124 @@ const Character = () => {
         fontWeight: "bold",
         transitionTimingFunction: "ease",
     };
+    const imgContainder = {
+        zIndex: 4,
+        position: "relative",
+        filter: modalOpen === true ? "blur(5px)" : "none",
+    };
+    const modalStyle = {
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        width: contentsWidth > 700 ? contentsWidth / 1.5 : contentsWidth,
+        height: contentsHeight > 500 ? contentsHeight / 1.4 : contentsHeight,
+        position: "absolute",
+        zIndex: modalOpen === false ? "3" : "5",
+        display: modalOpen === false ? "none" : "block",
+    };
 
     return (
         <div ref={contentsRef} className="contents">
-            <div style={{ ...characterImgLayout, textAlign: "center" }}>
-                {Object.keys(CharacterImgSrc_1).map((characterName) => (
-                    <div
-                        style={{ position: "relative", overflow: "hidden" }}
-                        class="img_box"
-                        key={characterName}
-                        onMouseEnter={() => handleMouseEnter(characterName)}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <div class="img_box__overlay" onClick={() => openModal(characterName)}>
-                            <img
-                                src={CharacterImgSrc_1[characterName]}
-                                alt={characterName}
-                                width={"90%"}
-                                height={"100%"}
-                                style={hoveredCharacter === characterName ? isHovered : isUnHovered}
-                            />
-                        </div>
-                        <p style={hoveredCharacter === characterName ? isTextHovered : isTextUnHovered}>{characterName}</p>
-                    </div>
-                ))}
+            <div style={modalStyle} className="contents">
+                <div className="modalClose" onClick={closeModal} style={{ display: "flex", justifyContent: "flex-end", padding: 30 }}>
+                    <AiOutlineClose className="modalCloseIcon" size={contentsWidth > 600 ? 30 : contentsWidth > 500 ? 20 : 15} color="white" />
+                </div>
+                <div id={chracterYoutubeKey} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <iframe
+                        width={contentsWidth > 700 ? contentsWidth * 0.4 : contentsWidth}
+                        height={contentsWidth > 700 ? contentsWidth * 0.2 : contentsWidth}
+                        src={`https://www.youtube.com/embed/${chracterYoutubeKey}?autoplay=1&rel=0&mute=0&autohide='2'&modestbranding=1&enablejsapi=1&version=3&playerapiid=ytplayer`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                    ></iframe>
+                </div>
+                <div>
+                    <h1 style={{ color: "white" }}>hi</h1>
+                    <h1 style={{ color: "white" }}>hi</h1>
+                    <h1 style={{ color: "white" }}>hi</h1>
+                    <h1 style={{ color: "white" }}>hi</h1>
+                    <h1 style={{ color: "white" }}>hi</h1>
+                    <h1 style={{ color: "white" }}>hi</h1>
+                    <h1 style={{ color: "white" }}>hi</h1>
+                </div>
             </div>
-            <div style={{ ...characterImgLayout, textAlign: "center" }}>
-                {Object.keys(CharacterImgSrc_2).map((characterName) => (
-                    <div
-                        style={{
-                            position: "relative",
-                            overflow: "hidden",
-                        }}
-                        class="img_box"
-                        key={characterName}
-                        onMouseEnter={() => handleMouseEnter(characterName)}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <div class="img_box__overlay">
-                            <img
-                                src={CharacterImgSrc_2[characterName]}
-                                alt={characterName}
-                                width={"90%"}
-                                height={"100%"}
-                                style={{
-                                    ...(hoveredCharacter === characterName && characterName !== "EMPTY" ? isHovered : isUnHovered),
-                                    opacity: characterName === "EMPTY" ? 0 : 1,
-                                }}
-                            />
+            <div style={imgContainder}>
+                <div style={{ ...characterImgLayout, textAlign: "center" }}>
+                    {Object.keys(CharacterImgSrc_1).map((characterName) => (
+                        <div
+                            style={{ position: "relative", overflow: "hidden" }}
+                            className="img_box"
+                            key={characterName}
+                            onMouseEnter={() => handleMouseEnter(characterName)}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <div className="img_box__overlay" onClick={() => openModal(characterName)}>
+                                <img
+                                    src={CharacterImgSrc_1[characterName]}
+                                    alt={characterName}
+                                    width={"90%"}
+                                    height={"100%"}
+                                    style={hoveredCharacter === characterName ? isHovered : isUnHovered}
+                                />
+                            </div>
+                            <p style={hoveredCharacter === characterName ? isTextHovered : isTextUnHovered}>{characterName}</p>
                         </div>
-                        <p style={hoveredCharacter === characterName && characterName !== "EMPTY" ? isTextHovered : isTextUnHovered}>
-                            {characterName === "UNKNOWN1" ? "Comming Soon..." : characterName}
-                        </p>
-                    </div>
-                ))}
-            </div>
-            <div style={{ ...characterImgLayout, textAlign: "center" }}>
-                {Object.keys(CharacterImgSrc_3).map((characterName) => (
-                    <div
-                        style={{ position: "relative", overflow: "hidden" }}
-                        class="img_box"
-                        key={characterName}
-                        onMouseEnter={() => handleMouseEnter(characterName)}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <div class="img_box__overlay">
-                            <img
-                                src={CharacterImgSrc_3[characterName]}
-                                alt={characterName}
-                                width={"90%"}
-                                height={"100%"}
-                                style={hoveredCharacter === characterName ? isHovered : isUnHovered}
-                            />
+                    ))}
+                </div>
+                <div style={{ ...characterImgLayout, textAlign: "center" }}>
+                    {Object.keys(CharacterImgSrc_2).map((characterName) => (
+                        <div
+                            style={{
+                                position: "relative",
+                                overflow: "hidden",
+                            }}
+                            className="img_box"
+                            key={characterName}
+                            onMouseEnter={() => handleMouseEnter(characterName)}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <div className="img_box__overlay" onClick={characterName === "VALKYRIE" ? () => openModal(characterName) : null}>
+                                <img
+                                    src={CharacterImgSrc_2[characterName]}
+                                    alt={characterName}
+                                    width={"90%"}
+                                    height={"100%"}
+                                    style={{
+                                        ...(hoveredCharacter === characterName && characterName !== "EMPTY" ? isHovered : isUnHovered),
+                                        opacity: characterName === "EMPTY" ? 0 : 1,
+                                    }}
+                                />
+                            </div>
+                            <p style={hoveredCharacter === characterName && characterName !== "EMPTY" ? isTextHovered : isTextUnHovered}>
+                                {characterName === "UNKNOWN1" ? "Comming Soon..." : characterName}
+                            </p>
                         </div>
-                        <p style={hoveredCharacter === characterName ? isTextHovered : isTextUnHovered}>Comming Soon...</p>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <div style={{ ...characterImgLayout, textAlign: "center" }}>
+                    {Object.keys(CharacterImgSrc_3).map((characterName) => (
+                        <div
+                            style={{ position: "relative", overflow: "hidden" }}
+                            className="img_box"
+                            key={characterName}
+                            onMouseEnter={() => handleMouseEnter(characterName)}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <div className="img_box__overlay">
+                                <img
+                                    src={CharacterImgSrc_3[characterName]}
+                                    alt={characterName}
+                                    width={"90%"}
+                                    height={"100%"}
+                                    style={hoveredCharacter === characterName ? isHovered : isUnHovered}
+                                />
+                            </div>
+                            <p style={hoveredCharacter === characterName ? isTextHovered : isTextUnHovered}>Comming Soon...</p>
+                        </div>
+                    ))}
+                </div>
             </div>
+
             <SiteInfo width={contentsWidth} height={contentsHeight} />
         </div>
     );

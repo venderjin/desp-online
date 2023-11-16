@@ -14,4 +14,11 @@ const CharacterImgSrc_3 = {
     UNKNOWN4: "https://despbukkit.s3.ap-northeast-2.amazonaws.com/RPGCLASS_UNKNOWN.png",
 };
 
-export { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3 };
+const CharacterPlayVideo = {
+    BELPHEGOR: "4bed7D_jXYo",
+    ENLIL: "PFEUnM1fcIo",
+    REVENANT: "9pQwUo3i7cw",
+    VALKYRIE: "F0DswR9DYro",
+};
+
+export { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3, CharacterPlayVideo };

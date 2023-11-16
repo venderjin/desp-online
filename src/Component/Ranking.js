@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Ranking = () => {
     return (
-        <div className="App">
+        <div>
             <h1>Ranking</h1>
-            <button>Ranking 바로가기</button>
+            <button>X</button>
         </div>
     );
 };
