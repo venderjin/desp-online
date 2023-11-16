@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import "../CSS/Contents.css";
 import { Ranking, Announcement } from "../Constants/HomeConstants";
 import SiteInfo from "./SiteInfo";
+import banner from "../asset/banner.png";
 
 const Home = () => {
     //navBar 사이즈 설정
@@ -30,16 +31,19 @@ const Home = () => {
     }, []);
 
     const HomeBannerStyle = {
-        height: contentsHeight * 0.2,
-        backgroundColor: "#FCD99A",
+        height: contentsWidth > 700 ? contentsWidth / 4 : contentsWidth / 3,
+        width: contentsWidth > 700 ? contentsWidth / 1.5 : contentsWidth,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: "green",
     };
     const HomeInfoStyle = {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
+        paddingLeft: contentsWidth * 0.01,
+        paddingRight: contentsWidth * 0.01,
     };
     const HomeAnnouncementStyle = {
         width: contentsWidth * 0.32,
@@ -66,11 +70,10 @@ const Home = () => {
         borderRadius: "5px",
         paddingLeft: contentsWidth * 0.01,
     };
-
     return (
         <div ref={contentsRef} className="contents">
             <div style={HomeBannerStyle}>
-                <h1>DESP-ONLINE</h1>
+                <img src={banner} alt="DESP-ONLINE" style={{ width: "100%", height: contentsWidth > 700 ? contentsWidth / 4.5 : contentsWidth / 3 }} />
             </div>
             <div style={HomeInfoStyle}>
                 <div style={HomeAnnouncementStyle}>
@@ -96,7 +99,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <SiteInfo />
+            <SiteInfo width={contentsWidth} height={contentsHeight} />
         </div>
     );
 };

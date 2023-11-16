@@ -54,7 +54,7 @@ const UserSearch = () => {
                 <input type="text" value={search} onChange={onChange} style={userSearchBar} placeholder="유저 닉네임을 검색해주세요" />
             </div>
             {/* <div>유저 검색확인</div> */}
-            <SiteInfo />
+            <SiteInfo width={contentsWidth} height={contentsHeight} />
         </div>
     );
 };

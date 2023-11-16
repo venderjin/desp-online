@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
-import "../CSS/Character.css";
 import { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3 } from "../Constants/CharacterConstants";
 
 const Character = () => {
@@ -158,7 +157,7 @@ const Character = () => {
                     </div>
                 ))}
             </div>
-            <SiteInfo />
+            <SiteInfo width={contentsWidth} height={contentsHeight} />
         </div>
     );
 };
