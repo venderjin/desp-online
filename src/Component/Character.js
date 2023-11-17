@@ -128,7 +128,7 @@ const Character = () => {
         filter: modalOpen === true ? "blur(5px)" : "none",
     };
     const modalStyle = {
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
         width: contentsWidth > 700 ? contentsWidth / 1.5 : contentsWidth,
         height: contentsHeight > 500 ? contentsHeight / 1.4 : contentsHeight,
         position: "absolute",

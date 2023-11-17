@@ -1,5 +1,5 @@
 const SiteInfoConstants = {
-    name: "DESP-ONLINE",
+    name: "데스프온라인",
     copyright: "Copyright ⓒ DESP-ONLINE. All Rights Reserved",
     link: "https://desp-online.kr/",
     representative: "김형우",
