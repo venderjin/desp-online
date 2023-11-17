@@ -93,7 +93,7 @@ const Home = () => {
                         <p style={HomeText}>{Announcement.name}</p>
                     </div>
                     <div style={HomeAnnouncementBoxStyle}>
-                        <h3>1위</h3>
+                        <h3>공지사항</h3>
                     </div>
                 </div>
             </div>
