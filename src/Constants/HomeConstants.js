@@ -6,4 +6,8 @@ const Announcement = {
     name: "공지사항",
 };
 
-export { Ranking, Announcement };
+const banner = {
+    url: "https://despbukkit.s3.ap-northeast-2.amazonaws.com/Banner.png",
+};
+
+export { Ranking, Announcement, banner };

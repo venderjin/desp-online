@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../CSS/Contents.css";
-import { Ranking, Announcement } from "../Constants/HomeConstants";
+import { Ranking, Announcement, banner } from "../Constants/HomeConstants";
 import SiteInfo from "./SiteInfo";
-import banner from "../asset/banner.png";
 
 const Home = () => {
     //navBar 사이즈 설정
@@ -72,7 +71,7 @@ const Home = () => {
     return (
         <div ref={contentsRef} className="contents">
             <div style={HomeBannerStyle}>
-                <img src={banner} alt="DESP-ONLINE" style={{ width: "100%", height: contentsWidth > 700 ? contentsWidth / 4.5 : contentsWidth / 3 }} />
+                <img src={banner.url} alt="DESP-ONLINE" style={{ width: "100%", height: contentsWidth > 700 ? contentsWidth / 4.5 : contentsWidth / 3 }} />
             </div>
             <div style={HomeInfoStyle}>
                 <div style={HomeAnnouncementStyle}>

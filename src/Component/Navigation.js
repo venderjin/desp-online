@@ -56,6 +56,7 @@ const Navigation = () => {
     // 현재 활성 버튼을 추적하는 상태
     const [activeButton, setActiveButton] = useState("Home");
     const handleButtonClick = (buttonLabel, path) => {
+        //오픈미정 페이지 블락처리
         if (buttonLabel === "랭킹" || buttonLabel === "유저 검색") return alert("사이트 오픈 준비중입니다.");
         else {
             setActiveButton(buttonLabel);

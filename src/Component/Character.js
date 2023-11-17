@@ -1,8 +1,17 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
 import { AiOutlineClose } from "react-icons/ai";
+import { Radar } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 
-import { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3, CharacterPlayVideo } from "../Constants/CharacterConstants";
+import {
+    CharacterImgSrc_1,
+    CharacterImgSrc_2,
+    CharacterImgSrc_3,
+    CharacterPlayVideo,
+    CharacterRaderChart,
+    CharacterRaderChartOptions,
+} from "../Constants/CharacterConstants";
 
 const Character = () => {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
@@ -39,10 +48,20 @@ const Character = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [chracterYoutubeKey, setchracterYoutubeKey] = useState(null);
+    const [chracterRaderChartData, setchracterRaderChartData] = useState(CharacterRaderChart.BELPHEGOR.chartData);
 
     const openModal = (clickedCharacterName) => {
         setModalOpen(true);
         setchracterYoutubeKey(CharacterPlayVideo[clickedCharacterName]);
+        // CharacterRaderChart에서 해당 캐릭터의 chartData 가져오기
+        const chartData = CharacterRaderChart[clickedCharacterName]?.chartData;
+        if (chartData) {
+            setchracterRaderChartData(chartData);
+        } else {
+            // 해당 캐릭터의 데이터가 없을 경우 예외 처리 또는 기본값 설정
+            // 예외 처리 예시:
+            console.error(`No chartData found for character: ${clickedCharacterName}`);
+        }
     };
     const closeModal = () => {
         setModalOpen(false);
@@ -104,7 +123,7 @@ const Character = () => {
         filter: modalOpen === true ? "blur(5px)" : "none",
     };
     const modalStyle = {
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
         width: contentsWidth > 700 ? contentsWidth / 1.5 : contentsWidth,
         height: contentsHeight > 500 ? contentsHeight / 1.4 : contentsHeight,
         position: "absolute",
@@ -115,13 +134,13 @@ const Character = () => {
     return (
         <div ref={contentsRef} className="contents">
             <div style={modalStyle} className="contents">
-                <div className="modalClose" onClick={closeModal} style={{ display: "flex", justifyContent: "flex-end", padding: 30 }}>
+                <div className="modalClose" onClick={closeModal} style={{ display: "flex", justifyContent: "flex-end", padding: 20 }}>
                     <AiOutlineClose className="modalCloseIcon" size={contentsWidth > 600 ? 30 : contentsWidth > 500 ? 20 : 15} color="white" />
                 </div>
                 <div id={chracterYoutubeKey} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <iframe
                         width={contentsWidth > 700 ? contentsWidth * 0.4 : contentsWidth}
-                        height={contentsWidth > 700 ? contentsWidth * 0.2 : contentsWidth}
+                        height={contentsWidth > 700 ? contentsWidth * 0.225 : contentsWidth}
                         src={`https://www.youtube.com/embed/${chracterYoutubeKey}?autoplay=1&rel=0&mute=0&autohide='2'&modestbranding=1&enablejsapi=1&version=3&playerapiid=ytplayer`}
                         title="YouTube video player"
                         frameBorder="0"
@@ -129,14 +148,16 @@ const Character = () => {
                         allowFullScreen
                     ></iframe>
                 </div>
-                <div>
-                    <h1 style={{ color: "white" }}>hi</h1>
-                    <h1 style={{ color: "white" }}>hi</h1>
-                    <h1 style={{ color: "white" }}>hi</h1>
-                    <h1 style={{ color: "white" }}>hi</h1>
-                    <h1 style={{ color: "white" }}>hi</h1>
-                    <h1 style={{ color: "white" }}>hi</h1>
-                    <h1 style={{ color: "white" }}>hi</h1>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: contentsHeight * 0.05 }}>
+                    <div
+                        style={{
+                            width: contentsWidth > 700 ? contentsWidth * 0.25 : contentsWidth,
+                            height: contentsWidth > 700 ? contentsWidth * 0.25 : contentsWidth,
+                            backgroundColor: "rgba(150, 150, 150, 0.7)",
+                        }}
+                    >
+                        <Radar data={chracterRaderChartData} options={CharacterRaderChartOptions.chartOptions} />
+                    </div>
                 </div>
             </div>
             <div style={imgContainder}>
