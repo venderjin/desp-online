@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
 import { AiOutlineClose } from "react-icons/ai";
-import YouTube from "react-youtube";
 
 import { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3, CharacterPlayVideo } from "../Constants/CharacterConstants";
 

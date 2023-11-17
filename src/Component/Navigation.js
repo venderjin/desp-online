@@ -56,8 +56,11 @@ const Navigation = () => {
     // 현재 활성 버튼을 추적하는 상태
     const [activeButton, setActiveButton] = useState("Home");
     const handleButtonClick = (buttonLabel, path) => {
-        setActiveButton(buttonLabel);
-        navigate(path);
+        if (buttonLabel === "랭킹" || buttonLabel === "유저 검색") return alert("사이트 오픈 준비중입니다.");
+        else {
+            setActiveButton(buttonLabel);
+            navigate(path);
+        }
     };
 
     const navBarWideStyle = {
@@ -70,13 +73,13 @@ const Navigation = () => {
         paddingBottom: "10px",
     };
 
-    const navBarSmallStyle = {
-        marginTop: "20px",
-        height: "100px",
-        borderBottom: "1px solid white", // 아래 테두리를 흰색으로 설정
-        display: "flex",
-        paddingBottom: "10px",
-    };
+    // const navBarSmallStyle = {
+    //     marginTop: "20px",
+    //     height: "100px",
+    //     borderBottom: "1px solid white", // 아래 테두리를 흰색으로 설정
+    //     display: "flex",
+    //     paddingBottom: "10px",
+    // };
 
     const navBtnStyle = {
         height: navHeight > 600 ? `${navHeight / 8}px` : "80px",
@@ -102,55 +105,55 @@ const Navigation = () => {
     };
     return (
         <div ref={navRef}>
-            {navMenu === false ? (
+            {/* {navMenu === false ? (
                 //wide screen navBar
-                <>
-                    <div style={navBarWideStyle}>
-                        <div style={navBtnStyle2}>
-                            {buttonsLeft.map((button, index) => (
-                                <button
-                                    key={index}
-                                    style={{
-                                        ...navBtnStyle,
-                                        fontWeight: activeButton === button.label ? "bold" : "normal",
-                                    }}
-                                    onClick={() => handleButtonClick(button.label, button.path)}
-                                >
-                                    {button.label}
-                                </button>
-                            ))}
-                        </div>
-                        <div>
-                            {buttonsHome.map((button, index) => (
-                                <img
-                                    key={index}
-                                    src="https://despbukkit.s3.ap-northeast-2.amazonaws.com/desp-online+logo.png" // 이미지 경로를 설정
-                                    alt="Home"
-                                    onClick={() => handleButtonClick(button.label, button.path)}
-                                    style={{
-                                        width: navHeight > 600 ? `${navHeight / 8}px` : "80px",
-                                        height: navHeight > 600 ? `${navHeight / 8}px` : "80px",
-                                        fontWeight: activeButton === button.label ? "bold" : "normal",
-                                    }}
-                                />
-                            ))}
-                        </div>
-                        <div style={navBtnStyle2}>
-                            {buttonsRight.map((button, index) => (
-                                <button
-                                    key={index}
-                                    style={{
-                                        ...navBtnStyle,
-                                        fontWeight: activeButton === button.label ? "bold" : "normal",
-                                    }}
-                                    onClick={() => handleButtonClick(button.label, button.path)}
-                                >
-                                    {button.label}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </>
+                <> */}
+            <div style={navBarWideStyle}>
+                <div style={navBtnStyle2}>
+                    {buttonsLeft.map((button, index) => (
+                        <button
+                            key={index}
+                            style={{
+                                ...navBtnStyle,
+                                fontWeight: activeButton === button.label ? "bold" : "normal",
+                            }}
+                            onClick={() => handleButtonClick(button.label, button.path)}
+                        >
+                            {button.label}
+                        </button>
+                    ))}
+                </div>
+                <div>
+                    {buttonsHome.map((button, index) => (
+                        <img
+                            key={index}
+                            src="https://despbukkit.s3.ap-northeast-2.amazonaws.com/desp-online+logo.png" // 이미지 경로를 설정
+                            alt="Home"
+                            onClick={() => handleButtonClick(button.label, button.path)}
+                            style={{
+                                width: navHeight > 600 ? `${navHeight / 8}px` : "80px",
+                                height: navHeight > 600 ? `${navHeight / 8}px` : "80px",
+                                fontWeight: activeButton === button.label ? "bold" : "normal",
+                            }}
+                        />
+                    ))}
+                </div>
+                <div style={navBtnStyle2}>
+                    {buttonsRight.map((button, index) => (
+                        <button
+                            key={index}
+                            style={{
+                                ...navBtnStyle,
+                                fontWeight: activeButton === button.label ? "bold" : "normal",
+                            }}
+                            onClick={() => handleButtonClick(button.label, button.path)}
+                        >
+                            {button.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+            {/* </>
             ) : (
                 //small screen navBar
                 <>
@@ -208,7 +211,7 @@ const Navigation = () => {
                         </div>
                     </div>
                 </>
-            )}
+            )} */}
         </div>
     );
 };
