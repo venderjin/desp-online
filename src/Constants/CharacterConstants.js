@@ -21,6 +21,13 @@ const CharacterPlayVideo = {
     VALKYRIE: "F0DswR9DYro",
 };
 
+const CharacterExplanation = {
+    BELPHEGOR: "마법사",
+    ENLIL: "궁수",
+    REVENANT: "암살자",
+    VALKYRIE: "전사",
+};
+
 const CharacterRaderChart = {
     BELPHEGOR: {
         chartData: {
@@ -145,4 +152,4 @@ const CharacterRaderChartOptions = {
     },
 };
 
-export { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3, CharacterPlayVideo, CharacterRaderChart, CharacterRaderChartOptions };
+export { CharacterImgSrc_1, CharacterImgSrc_2, CharacterImgSrc_3, CharacterPlayVideo, CharacterRaderChart, CharacterRaderChartOptions, CharacterExplanation };

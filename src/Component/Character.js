@@ -11,6 +11,7 @@ import {
     CharacterPlayVideo,
     CharacterRaderChart,
     CharacterRaderChartOptions,
+    CharacterExplanation,
 } from "../Constants/CharacterConstants";
 
 const Character = () => {
@@ -49,6 +50,8 @@ const Character = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [chracterYoutubeKey, setchracterYoutubeKey] = useState(null);
     const [chracterRaderChartData, setchracterRaderChartData] = useState(CharacterRaderChart.BELPHEGOR.chartData);
+    const [CharacterName, setCharacterName] = useState("");
+    const [CharacterRole, setCharacterRole] = useState("");
 
     const openModal = (clickedCharacterName) => {
         setModalOpen(true);
@@ -62,6 +65,8 @@ const Character = () => {
             // 예외 처리 예시:
             console.error(`No chartData found for character: ${clickedCharacterName}`);
         }
+        setCharacterName(clickedCharacterName);
+        setCharacterRole(CharacterExplanation[clickedCharacterName]);
     };
     const closeModal = () => {
         setModalOpen(false);
@@ -148,15 +153,29 @@ const Character = () => {
                         allowFullScreen
                     ></iframe>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: contentsHeight * 0.05 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly", marginTop: contentsHeight * 0.05 }}>
                     <div
                         style={{
                             width: contentsWidth > 700 ? contentsWidth * 0.25 : contentsWidth,
                             height: contentsWidth > 700 ? contentsWidth * 0.25 : contentsWidth,
-                            backgroundColor: "rgba(150, 150, 150, 0.7)",
                         }}
                     >
                         <Radar data={chracterRaderChartData} options={CharacterRaderChartOptions.chartOptions} />
+                    </div>
+                    <div
+                        style={{
+                            width: contentsWidth > 700 ? contentsWidth * 0.25 : contentsWidth,
+                            height: contentsWidth > 700 ? contentsWidth * 0.1 : contentsWidth,
+                            backgroundColor: "rgba(150, 150, 150, 0.7)",
+                            borderRadius: 10,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <h2>
+                            {CharacterName} - {CharacterRole}
+                        </h2>
                     </div>
                 </div>
             </div>

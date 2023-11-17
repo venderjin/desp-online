@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { announcementIndex } from "../Constants/AnnouncementConstants";
+import { announcementIndex, announcementTutorial } from "../Constants/AnnouncementConstants";
 import SiteInfo from "./SiteInfo";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const Announcement = () => {
     //navBar 사이즈 설정
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
@@ -37,46 +39,58 @@ const Announcement = () => {
         marginRight: contentsWidth * 0.01,
         display: "flex",
         flexDirection: "row",
-        marginTop: contentsHeight * 0.02,
-        // backgroundColor: "skyblue",
+        marginTop: contentsHeight * 0.05,
         alignItems: "center",
         justifyContent: "center",
+        // backgroundColor: "skyblue",
     };
+
     const announcementContainerStyle = {
-        width: contentsWidth > 700 ? contentsWidth / 1.5 : contentsWidth,
-        backgroundColor: "skyblue",
+        width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.01 : contentsWidth - contentsWidth * 0.01,
+        backgroundColor: "rgba(255, 255, 255, 0.7)",
         marginLeft: contentsWidth * 0.01,
         marginRight: contentsWidth * 0.01,
-        zIndex: isFocusedAnnouncement === announcementIndex.server ? 1 : 0,
+        display: isFocusedAnnouncement === announcementIndex.server ? "flex" : "none",
+        justifyContent: "center",
+        alignItems: "center",
     };
     const tutorialContainerStyle = {
-        width: contentsWidth > 700 ? contentsWidth / 1.5 : contentsWidth,
-        backgroundColor: "skyblue",
+        width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.01 : contentsWidth - contentsWidth * 0.01,
         marginLeft: contentsWidth * 0.01,
         marginRight: contentsWidth * 0.01,
+        display: isFocusedAnnouncement === announcementIndex.tutorial ? "flex" : "none",
+        justifyContent: "center",
+        alignItems: "center",
     };
     const indexStyle = {
-        width: contentsWidth > 700 ? contentsWidth / 3 - contentsWidth * 0.01 : contentsWidth / 2 - contentsWidth * 0.01,
+        width: contentsWidth > 700 ? contentsWidth / 3 : contentsWidth / 2,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        borderBottom: "1px solid grey", // 아래 테두리를 흰색으로 설정
-        borderTopLeftRadius: "30px", // 윗쪽 왼쪽 모서리를 둥글게 설정
-        borderTopRightRadius: "30px", // 윗쪽 오른쪽 모서리를 둥글게 설정
+        // borderTopLeftRadius: "30px", // 윗쪽 왼쪽 모서리를 둥글게 설정
+        // borderTopRightRadius: "30px", // 윗쪽 오른쪽 모서리를 둥글게 설정
     };
     const indexText = {
         color: "black", // 텍스트 색상을 흰색으로 설정
-        fontSize: contentsWidth > 1100 ? "25px" : contentsWidth > 900 ? "22px" : contentsWidth > 700 ? "19px" : "15px", // 글자 크기 설정
+        fontSize: contentsWidth > 1100 ? "23px" : contentsWidth > 900 ? "20px" : contentsWidth > 700 ? "17px" : "15px", // 글자 크기 설정
     };
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
     return (
-        <div ref={contentsRef} className="contents">
-            <div style={indexContainerStyle}>
+        <div ref={contentsRef} className="contents" style={{ display: "flex", flexDirection: "column" }}>
+            <div className="announcementIndex" style={indexContainerStyle}>
                 <div
                     className={announcementIndex.server}
                     style={{
                         ...indexStyle,
                         backgroundColor: isFocusedAnnouncement === announcementIndex.server ? "rgba(255, 255, 255, 0.7)" : "rgba(150, 150, 150, 0.7)",
+                        borderBottom: isFocusedAnnouncement === announcementIndex.server ? "1px solid white" : "1px solid grey", // 아래 테두리를 흰색으로 설정
                     }}
                     onClick={() => {
                         setIsFocusedAnnouncement(announcementIndex.server);
@@ -89,6 +103,7 @@ const Announcement = () => {
                     style={{
                         ...indexStyle,
                         backgroundColor: isFocusedAnnouncement === announcementIndex.tutorial ? "rgba(255, 255, 255, 0.7)" : "rgba(150, 150, 150, 0.7)",
+                        borderBottom: isFocusedAnnouncement === announcementIndex.tutorial ? "1px solid white" : "1px solid grey", // 아래 테두리를 흰색으로 설정
                     }}
                     onClick={() => {
                         setIsFocusedAnnouncement(announcementIndex.tutorial);
@@ -97,11 +112,44 @@ const Announcement = () => {
                     <p style={indexText}>튜토리얼</p>
                 </div>
             </div>
-            <div style={announcementContainerStyle}>
-                <h1>서버 공지사항</h1>
+            <div className="serverAnnouncement" style={announcementContainerStyle}>
+                <h2>서버 공지사항</h2>
             </div>
-            <div style={tutorialContainerStyle}>
-                <h1>튜토리얼</h1>
+            <div className="tutorialAnnouncement" style={tutorialContainerStyle}>
+                <div
+                    style={{
+                        width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.01 : contentsWidth - contentsWidth * 0.01,
+                        height: contentsWidth / 2.5,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        backgroundColor: "rgba(255, 255, 255, 0.7)",
+                        marginLeft: contentsWidth * 0.01,
+                        marginRight: contentsWidth * 0.01,
+                    }}
+                >
+                    <Slider
+                        {...settings}
+                        style={{
+                            width: "80%",
+                            height: "auto",
+                        }}
+                    >
+                        {Array.from({ length: 16 }, (_, index) => (
+                            <div key={index}>
+                                <img
+                                    src={announcementTutorial[index + 1]}
+                                    alt={String(index + 1)}
+                                    style={{
+                                        width: "100%",
+                                        height: "auto",
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </Slider>
+                </div>
             </div>
             <SiteInfo width={contentsWidth} height={contentsHeight} />
         </div>

@@ -2,9 +2,8 @@ import React from "react";
 
 const Donation = () => {
     return (
-        <div className="contents">
-            <h1>Donation</h1>
-            <button>Donation 바로가기</button>
+        <div className="contents" style={{ backgroundColor: "grey" }}>
+            <h1>후원</h1>
         </div>
     );
 };
