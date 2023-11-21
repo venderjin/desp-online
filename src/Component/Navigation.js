@@ -49,7 +49,7 @@ const Navigation = () => {
     const buttonsRight = [
         { label: "랭킹", path: "/Ranking" },
         { label: "유저 검색", path: "/UserSearch" },
-        { label: "후원", path: "/Donation" },
+        { label: "충전", path: "/Donation" },
     ];
     const navigate = useNavigate();
 

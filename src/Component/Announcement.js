@@ -53,6 +53,8 @@ const Announcement = () => {
         display: isFocusedAnnouncement === announcementIndex.server ? "flex" : "none",
         justifyContent: "center",
         alignItems: "center",
+        borderBottomLeftRadius: "20px", // 아래쪽 왼쪽 모서리를 둥글게 설정
+        borderBottomRightRadius: "20px", // 아래쪽 오른쪽 모서리를 둥글게 설정
     };
     const tutorialContainerStyle = {
         width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.01 : contentsWidth - contentsWidth * 0.01,
@@ -67,8 +69,8 @@ const Announcement = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        // borderTopLeftRadius: "30px", // 윗쪽 왼쪽 모서리를 둥글게 설정
-        // borderTopRightRadius: "30px", // 윗쪽 오른쪽 모서리를 둥글게 설정
+        borderTopLeftRadius: "20px", // 윗쪽 왼쪽 모서리를 둥글게 설정
+        borderTopRightRadius: "20px", // 윗쪽 오른쪽 모서리를 둥글게 설정
     };
     const indexText = {
         color: "black", // 텍스트 색상을 흰색으로 설정
@@ -127,6 +129,8 @@ const Announcement = () => {
                         backgroundColor: "rgba(255, 255, 255, 0.7)",
                         marginLeft: contentsWidth * 0.01,
                         marginRight: contentsWidth * 0.01,
+                        borderBottomLeftRadius: "20px", // 아래쪽 왼쪽 모서리를 둥글게 설정
+                        borderBottomRightRadius: "20px", // 아래쪽 오른쪽 모서리를 둥글게 설정
                     }}
                 >
                     <Slider
