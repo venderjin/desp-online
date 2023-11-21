@@ -51,7 +51,10 @@ const Donation = () => {
         }, 0);
 
         // Format the total amount with commas
-        return total.toLocaleString();
+        return {
+            rawTotal: total, //number
+            formattedTotal: total.toLocaleString(), //string
+        };
     };
 
     //토스페이먼츠 페이지 이동
@@ -216,17 +219,18 @@ const Donation = () => {
                 </div>
                 <div style={donationTotalAmountContainer}>
                     <div style={donationTotalAmount}>
-                        <p style={donationTitle}>총 충전금액 : {calculateTotal()}원</p>
+                        <p style={donationTitle}>총 충전금액 : {calculateTotal().formattedTotal}원</p>
                     </div>
                     <div style={donationPaymentButtonContainer}>
                         <button
                             style={paymentsbuttonStyle}
                             onClick={() => {
-                                const totalAmount = calculateTotal();
+                                const totalAmount = calculateTotal().rawTotal;
+                                const formattedTotalAmount = calculateTotal().formattedTotal;
                                 if (totalAmount === "0") {
                                     alert("충전금액을 선택해주세요.");
-                                } else if (window.confirm(`${totalAmount}원을 충전하시겠습니까?`)) {
-                                    navigate(Paymentspath);
+                                } else if (window.confirm(`${formattedTotalAmount}원을 충전하시겠습니까?`)) {
+                                    navigate(Paymentspath, { state: { totalAmount } });
                                 }
                             }}
                         >
