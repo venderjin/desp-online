@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
 import cash from "../Constants/DonationConstans";
+import { useNavigate } from "react-router-dom";
 
 const Donation = () => {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
@@ -52,6 +53,11 @@ const Donation = () => {
         // Format the total amount with commas
         return total.toLocaleString();
     };
+
+    //토스페이먼츠 페이지 이동
+    const navigate = useNavigate();
+    const Paymentspath = "/Payments";
+
     const donationChargeContainer = {
         width: contentsWidth > 700 ? contentsWidth / 1.5 : contentsWidth,
         height: contentsHeight > 500 ? contentsHeight / 1.5 : contentsHeight,
@@ -213,7 +219,19 @@ const Donation = () => {
                         <p style={donationTitle}>총 충전금액 : {calculateTotal()}원</p>
                     </div>
                     <div style={donationPaymentButtonContainer}>
-                        <button style={paymentsbuttonStyle}>결제</button>
+                        <button
+                            style={paymentsbuttonStyle}
+                            onClick={() => {
+                                const totalAmount = calculateTotal();
+                                if (totalAmount === "0") {
+                                    alert("충전금액을 선택해주세요.");
+                                } else if (window.confirm(`${totalAmount}원을 충전하시겠습니까?`)) {
+                                    navigate(Paymentspath);
+                                }
+                            }}
+                        >
+                            결제
+                        </button>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import Character from "./Character";
 import Ranking from "./Ranking";
 import UserSearch from "./UserSearch";
 import Donation from "./Donation";
+import Payments from "./Payments";
 
 const Main = () => {
     //시간에 따라 배경화면 변경
@@ -98,6 +99,7 @@ const Main = () => {
                             <Route path="/Ranking" element={<Ranking />} />
                             <Route path="/UserSearch" element={<UserSearch />} />
                             <Route path="/Donation" element={<Donation />} />
+                            <Route path="/Payments" element={<Payments />} />
                         </Routes>
                     </Router>
                 </div>
