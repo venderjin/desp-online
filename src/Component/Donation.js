@@ -170,13 +170,6 @@ const Donation = () => {
     const paymentsbuttonStyle = {
         padding: "10px 55px",
         margin: "0 5px",
-        backgroundColor: "#372B2A", // A nice shade of green
-        color: "white",
-        border: "none",
-        borderRadius: "50px",
-        cursor: "pointer",
-        fontSize: contentsWidth > 1100 ? "20px" : contentsWidth > 900 ? "18px" : contentsWidth > 700 ? "15px" : "13px", // 글자 크기 설정
-        outline: "none", // Remove the outline on focus
     };
 
     return (
@@ -223,14 +216,30 @@ const Donation = () => {
                     </div>
                     <div style={donationPaymentButtonContainer}>
                         <button
-                            style={paymentsbuttonStyle}
+                            style={{
+                                ...paymentsbuttonStyle,
+                                backgroundColor: "#4A4443", // A nice shade of green
+                                color: "white",
+                                border: "none",
+                                borderRadius: "50px",
+                                cursor: "pointer",
+                                fontSize: contentsWidth > 1100 ? "20px" : contentsWidth > 900 ? "18px" : contentsWidth > 700 ? "15px" : "13px",
+                                outline: "none",
+                                transition: "background-color 0.3s ease",
+                            }}
+                            onMouseOver={(e) => {
+                                e.target.style.backgroundColor = "#372B2A";
+                            }}
+                            onMouseOut={(e) => {
+                                e.target.style.backgroundColor = "#4A4443";
+                            }}
                             onClick={() => {
                                 const totalAmount = calculateTotal().rawTotal;
                                 const formattedTotalAmount = calculateTotal().formattedTotal;
-                                if (totalAmount === "0") {
+                                if (totalAmount === 0) {
                                     alert("충전금액을 선택해주세요.");
                                 } else if (window.confirm(`${formattedTotalAmount}원을 충전하시겠습니까?`)) {
-                                    navigate(Paymentspath, { state: { totalAmount } });
+                                    navigate(Paymentspath, { state: { totalAmount, contentsWidth, contentsHeight } });
                                 }
                             }}
                         >
