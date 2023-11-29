@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import paymentsKey from "../Constants/PaymentsConstants";
 import { AiOutlineCheck } from "react-icons/ai";
 
@@ -10,6 +9,15 @@ export default function Success() {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
     const [contentsWidth, setContentsWidth] = useState(100); // 초기 너비를 100으로 설정
     const contentsRef = useRef(null); // 컨텐츠의 ref를 설정
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const nickname = queryParams.get("nickname");
+    const orderId = searchParams.get("orderId");
+    const amount = searchParams.get("amount");
+    const formattedAmount = new Intl.NumberFormat("ko-KR", { currency: "KRW" }).format(amount);
+    console.log("nickname is", nickname);
+    console.log("orderId is", orderId);
+    console.log("amount is", amount);
 
     useEffect(() => {
         const updateSize = () => {
@@ -56,14 +64,15 @@ export default function Success() {
 
             if (!response.ok) {
                 // TODO: 구매 실패 비즈니스 로직 구현
-                console.log("fail reason is", json);
+                // console.log("fail reason is", json);
                 navigate(`/fail?code=${json.code}&message=${json.message}`);
                 return;
             }
 
             // TODO: 구매 완료 비즈니스 로직 구현
-            console.log("success ", json);
+            // console.log("success ", json);
         }
+
         confirm();
     }, []);
 
@@ -140,12 +149,14 @@ export default function Success() {
                 </div>
                 <div style={successcontentsContainer}>
                     <div>
+                        <p style={sucessSubContents}>닉네임</p>
                         <p style={sucessSubContents}>결제 번호</p>
                         <p style={sucessSubContents}>결제 금액</p>
                     </div>
                     <div style={{ textAlign: "right" }}>
-                        <p style={sucessContents}> {`${searchParams.get("orderId")}`}</p>
-                        <p style={sucessContents}>{`${Number(searchParams.get("amount")).toLocaleString()}원`}</p>
+                        <p style={sucessContents}> {nickname}</p>
+                        <p style={sucessContents}> {orderId}</p>
+                        <p style={sucessContents}>{formattedAmount}원</p>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
-import cash from "../Constants/DonationConstans";
-import { useNavigate } from "react-router-dom";
+import { cash, maxPrice } from "../Constants/DonationConstans";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Donation = () => {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
     const [contentsWidth, setContentsWidth] = useState(100); // 초기 너비를 100으로 설정
     const contentsRef = useRef(null); // 컨텐츠의 ref를 설정
+    const location = useLocation();
+    const { confirmedNickname } = location.state;
+    const userNickname = confirmedNickname;
 
     useEffect(() => {
         const updateSize = () => {
@@ -34,21 +37,15 @@ const Donation = () => {
         return acc;
     }, {});
 
-    const [amounts, setAmounts] = useState(initialAmounts);
+    const [unvalidAmountUnit, setUnvalidAmountUnit] = useState(initialAmounts);
+    // const [totalAmount, setTotalAmount] = useState(0);
+    // const maxAmount = 100000;
 
-    // Function to update the amount for a specific donation
-    const updateAmount = (cashAmount, increment) => {
-        setAmounts((prevAmounts) => ({
-            ...prevAmounts,
-            [cashAmount]: increment ? prevAmounts[cashAmount] + 1 : Math.max(prevAmounts[cashAmount] - 1, 0),
-        }));
-    };
-
-    // Function to calculate and format the total donation amount
+    // 바뀔 예정인 금액 계산
+    //검증 0~10만 범위인지 만약 아니라면 예외처리 이전 값으로 고정
+    //새로 계산한 금액 적용
     const calculateTotal = () => {
-        const total = Object.entries(amounts).reduce((sum, [cashAmount, quantity]) => {
-            return sum + parseInt(cashAmount) * quantity;
-        }, 0);
+        const total = calculateTmpTotal(unvalidAmountUnit);
 
         // Format the total amount with commas
         return {
@@ -56,6 +53,34 @@ const Donation = () => {
             formattedTotal: total.toLocaleString(), //string
         };
     };
+
+    // Function to update the amount for a specific donation
+    const updateAmount = (cashAmount, increment) => {
+        //unvalidAmountUnit의 변경 전 상태 기억하기
+        const prevAmounts = JSON.parse(JSON.stringify(unvalidAmountUnit));
+        prevAmounts[cashAmount] += increment ? 1 : -1;
+
+        const afterTotal = calculateTmpTotal(prevAmounts);
+
+        if (afterTotal > maxPrice) {
+            alert("충전 1회당 최대 10만원까지 충전 가능합니다.");
+            return;
+        }
+
+        setUnvalidAmountUnit((unvalidAmountUnit) => ({
+            ...unvalidAmountUnit,
+            [cashAmount]: increment ? unvalidAmountUnit[cashAmount] + 1 : Math.max(unvalidAmountUnit[cashAmount] - 1, 0),
+        }));
+    };
+
+    const calculateTmpTotal = (unvalidAmountUnit) => {
+        const total = Object.entries(unvalidAmountUnit).reduce((sum, [cashAmount, quantity]) => {
+            return sum + parseInt(cashAmount) * quantity;
+        }, 0);
+        return total;
+    };
+
+    // Function to calculate and format the total donation amount
 
     //토스페이먼츠 페이지 이동
     const navigate = useNavigate();
@@ -77,19 +102,20 @@ const Donation = () => {
     const donationTitleContainer = {
         // backgroundColor: "lightgrey",
         width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.08 : contentsWidth - contentsWidth * 0.08,
-        height: contentsHeight > 500 ? contentsHeight / 10 : contentsHeight,
+        height: contentsHeight > 500 ? contentsHeight / 8 : contentsHeight,
         marginLeft: contentsWidth * 0.05,
         marginRight: contentsWidth * 0.05,
         display: "flex",
-        alignItems: "center",
+        // alignItems: "center",
+        justifyContent: "center",
         paddingLeft: contentsWidth * 0.03,
-        // flexDirection: "row",
+        flexDirection: "column",
     };
 
     const donationAmountContainer = {
         // backgroundColor: "lightgrey",
         width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.08 : contentsWidth - contentsWidth * 0.08,
-        height: contentsHeight > 500 ? contentsHeight / 2.5 : contentsHeight,
+        height: contentsHeight > 500 ? contentsHeight / 3 : contentsHeight,
         marginLeft: contentsWidth * 0.05,
         marginRight: contentsWidth * 0.05,
         borderTop: "2px solid black", // 아래 테두리를 흰색으로 설정
@@ -103,7 +129,7 @@ const Donation = () => {
     const donationTotalAmountContainer = {
         // backgroundColor: "lightgrey",
         width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.08 : contentsWidth - contentsWidth * 0.08,
-        height: contentsHeight > 500 ? contentsHeight / 10 : contentsHeight,
+        height: contentsHeight > 500 ? contentsHeight / 7 : contentsHeight,
         marginLeft: contentsWidth * 0.05,
         marginRight: contentsWidth * 0.05,
         display: "flex",
@@ -115,7 +141,14 @@ const Donation = () => {
     const donationTitle = {
         fontSize: contentsWidth > 1100 ? "23px" : contentsWidth > 900 ? "20px" : contentsWidth > 700 ? "17px" : "15px", // 글자 크기 설정
         fontWeight: "bold",
+        margin: 0,
     };
+    const donationSubTitle = {
+        color: "#372B2A",
+        fontSize: contentsWidth > 1100 ? "16px" : contentsWidth > 900 ? "13px" : contentsWidth > 700 ? "10px" : "8px", // 글자 크기 설정
+        margin: 0,
+    };
+
     const cashLabelContainer = {
         // backgroundColor: "green",
         height: contentsHeight > 500 ? contentsHeight / 10 : contentsHeight,
@@ -177,6 +210,7 @@ const Donation = () => {
             <div style={donationChargeContainer}>
                 <div style={donationTitleContainer}>
                     <p style={donationTitle}>충전하실 금액을 선택해주세요.</p>
+                    <p style={donationSubTitle}>충전 1회당 최대 10만원까지 충전 가능합니다.</p>
                 </div>
                 <div style={donationAmountContainer}>
                     <div>
@@ -199,7 +233,7 @@ const Donation = () => {
                                             -
                                         </button>
                                     </div>
-                                    <p style={donationCashText}>{amounts[cashAmount]}</p>
+                                    <p style={donationCashText}>{unvalidAmountUnit[cashAmount]}</p>
                                     <div style={{ paddingLeft: contentsWidth * 0.01 }}>
                                         <button style={countbuttonStyle} onClick={() => updateAmount(cashAmount, true)}>
                                             +
@@ -239,7 +273,7 @@ const Donation = () => {
                                 if (totalAmount === 0) {
                                     alert("충전금액을 선택해주세요.");
                                 } else if (window.confirm(`${formattedTotalAmount}원을 충전하시겠습니까?`)) {
-                                    navigate(Paymentspath, { state: { totalAmount, contentsWidth, contentsHeight } });
+                                    navigate(Paymentspath, { state: { userNickname, totalAmount, contentsWidth, contentsHeight } });
                                 }
                             }}
                         >

@@ -10,6 +10,7 @@ import Donation from "./Donation";
 import Payments from "./Payments";
 import Success from "./Success";
 import Fail from "./Fail";
+import NicknameValidation from "./NicknameValidation";
 
 const Main = () => {
     //시간에 따라 배경화면 변경
@@ -100,6 +101,7 @@ const Main = () => {
                             <Route path="/Character" element={<Character />} />
                             <Route path="/Ranking" element={<Ranking />} />
                             <Route path="/UserSearch" element={<UserSearch />} />
+                            <Route path="/NicknameValidation" element={<NicknameValidation />} />
                             <Route path="/Donation" element={<Donation />} />
                             <Route path="/Payments" element={<Payments />} />
                             <Route path="/Success" element={<Success />} />

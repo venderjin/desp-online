@@ -106,7 +106,6 @@ const Fail = () => {
                             className="pathToDonation"
                             style={{ textDecoration: "underline", cursor: "pointer" }}
                             onClick={() => {
-                                const redirect = "/Donation";
                                 navigate(redirect); // 클릭 시 리다이렉션 이벤트 발생
                             }}
                         >

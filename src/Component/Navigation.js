@@ -49,7 +49,7 @@ const Navigation = () => {
     const buttonsRight = [
         { label: "랭킹", path: "/Ranking" },
         { label: "유저 검색", path: "/UserSearch" },
-        { label: "충전", path: "/Donation" },
+        { label: "충전", path: "/NicknameValidation" },
     ];
     const navigate = useNavigate();
 
@@ -57,7 +57,11 @@ const Navigation = () => {
     const [activeButton, setActiveButton] = useState("Home");
     const handleButtonClick = (buttonLabel, path) => {
         //오픈미정 페이지 블락처리
-        if (buttonLabel === "유저 검색" || buttonLabel === "랭킹") return alert("사이트 오픈 준비중입니다.");
+        if (
+            buttonLabel === "유저 검색"
+            // || buttonLabel === "랭킹"
+        )
+            return alert("사이트 오픈 준비중입니다.");
         else {
             setActiveButton(buttonLabel);
             navigate(path);

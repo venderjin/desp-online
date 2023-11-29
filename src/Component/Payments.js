@@ -1,23 +1,74 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loadPaymentWidget } from "@tosspayments/payment-widget-sdk";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import { ANONYMOUS } from "@tosspayments/payment-widget-sdk";
 import paymentsKey from "../Constants/PaymentsConstants";
+import backEndUri from "../Constants/Constants";
+import { maxPrice } from "../Constants/DonationConstans";
 
 const selector = "#payment-widget";
 const clientKey = paymentsKey.clientKey;
 const customerKey = ANONYMOUS;
 
+// console.log("clientKey is", clientKey);
+
 export default function Payments() {
     const { data: paymentWidget } = usePaymentWidget(clientKey, customerKey);
     const paymentMethodsWidgetRef = useRef(null);
     const location = useLocation();
-    const { totalAmount, contentsWidth, contentsHeight } = location.state || {};
+    const { userNickname, totalAmount, contentsWidth, contentsHeight } = location.state || {};
     const width = contentsWidth;
     const height = contentsHeight;
     const price = totalAmount;
     const formattedTotalAmount = new Intl.NumberFormat("ko-KR", { currency: "KRW" }).format(price);
+    const nickname = userNickname;
+    const [buttonHidden, setButtonHidden] = useState(true);
+    const [priceCheck, setPriceCheck] = useState(false);
+    const [nicknameCheck, setNicknameCheck] = useState(false);
+
+    const nicknameValidation = backEndUri.nicknameValidation; // 닉네임 중복 확인 API
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(nicknameValidation + nickname, {
+                    method: "GET",
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data) {
+                        setNicknameCheck(true);
+                    } else {
+                        setNicknameCheck(false);
+                    }
+                } else {
+                    // 요청이 실패한 경우 에러 처리
+                    console.error("서버 요청 실패");
+                }
+            } catch (error) {
+                // 네트워크 오류 또는 다른 예외 처리
+                console.error("에러 발생", error);
+            }
+        };
+        fetchData(); // fetchData 함수 호출
+    }, [nickname, nicknameCheck]);
+
+    useEffect(() => {
+        if (price > maxPrice) {
+            setPriceCheck(false);
+        } else {
+            setPriceCheck(true);
+        }
+    }, [price, priceCheck]);
+
+    console.log("priceCheck is", priceCheck);
+    console.log("nicknameCheck is", nicknameCheck);
+
+    useEffect(() => {
+        setButtonHidden(!(priceCheck && nicknameCheck));
+        console.log("**buttonHidden is**", buttonHidden);
+    }, [priceCheck, nicknameCheck]);
 
     useEffect(() => {
         if (!paymentWidget) {
@@ -52,7 +103,6 @@ export default function Payments() {
 
         // 주문번호 형식: YYYYMMDDHHMMSSRRRR (년월일시분초 + 무작위 4자리)
         const orderId = `${year}${month}${day}${hours}${minutes}${seconds}${randomStr}`;
-
         return orderId;
     }
 
@@ -104,6 +154,7 @@ export default function Payments() {
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <button
                         className="button"
+                        disabled={buttonHidden}
                         style={{
                             ...paymentsbuttonStyle,
                             backgroundColor: "#4A4443", // A nice shade of green
@@ -127,11 +178,11 @@ export default function Payments() {
                                 // @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
                                 await paymentWidget?.requestPayment({
                                     orderId: generateOrderId(),
-                                    orderName: "토스 티셔츠 외 2건",
-                                    customerName: "김토스",
+                                    orderName: `${formattedTotalAmount}원 충전`,
+                                    customerName: `${nickname}`,
                                     customerEmail: "customer123@gmail.com",
                                     customerMobilePhone: "01012341234",
-                                    successUrl: `${window.location.origin}/success`,
+                                    successUrl: `${window.location.origin}/success?nickname=${encodeURIComponent(nickname)}`,
                                     failUrl: `${window.location.origin}/fail`,
                                 });
                             } catch (error) {
