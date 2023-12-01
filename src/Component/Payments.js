@@ -62,8 +62,8 @@ export default function Payments() {
         }
     }, [price, priceCheck]);
 
-    console.log("priceCheck is", priceCheck);
-    console.log("nicknameCheck is", nicknameCheck);
+    // console.log("priceCheck is", priceCheck);
+    // console.log("nicknameCheck is", nicknameCheck);
 
     useEffect(() => {
         setButtonHidden(!(priceCheck && nicknameCheck));

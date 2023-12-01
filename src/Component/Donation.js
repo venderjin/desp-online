@@ -102,7 +102,7 @@ const Donation = () => {
     const donationTitleContainer = {
         // backgroundColor: "lightgrey",
         width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.08 : contentsWidth - contentsWidth * 0.08,
-        height: contentsHeight > 500 ? contentsHeight / 8 : contentsHeight,
+        height: contentsHeight > 500 ? contentsHeight / 7 : contentsHeight,
         marginLeft: contentsWidth * 0.05,
         marginRight: contentsWidth * 0.05,
         display: "flex",
@@ -211,6 +211,7 @@ const Donation = () => {
                 <div style={donationTitleContainer}>
                     <p style={donationTitle}>충전하실 금액을 선택해주세요.</p>
                     <p style={donationSubTitle}>충전 1회당 최대 10만원까지 충전 가능합니다.</p>
+                    <p style={donationSubTitle}>서버에 한 번이라도 접속한 유저만 캐쉬충전이 가능합니다.</p>
                 </div>
                 <div style={donationAmountContainer}>
                     <div>

@@ -15,9 +15,12 @@ export default function Success() {
     const orderId = searchParams.get("orderId");
     const amount = searchParams.get("amount");
     const formattedAmount = new Intl.NumberFormat("ko-KR", { currency: "KRW" }).format(amount);
-    console.log("nickname is", nickname);
-    console.log("orderId is", orderId);
-    console.log("amount is", amount);
+    // console.log("nickname is", nickname);
+    // console.log("nickname type is", typeof nickname); //string
+    // console.log("orderId is", orderId);
+    // console.log("orderId type is", typeof orderId); //string
+    // console.log("amount is", amount);
+    // console.log("amount type is", typeof amount); //string
 
     useEffect(() => {
         const updateSize = () => {

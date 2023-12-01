@@ -47,7 +47,7 @@ const Announcement = () => {
 
     const announcementContainerStyle = {
         width: contentsWidth > 700 ? contentsWidth / 1.5 - contentsWidth * 0.01 : contentsWidth - contentsWidth * 0.01,
-        backgroundColor: "rgba(255, 255, 255, 0.7)",
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
         marginLeft: contentsWidth * 0.01,
         marginRight: contentsWidth * 0.01,
         display: isFocusedAnnouncement === announcementIndex.server ? "flex" : "none",
@@ -74,6 +74,7 @@ const Announcement = () => {
     };
     const indexText = {
         color: "black", // 텍스트 색상을 흰색으로 설정
+        fontWeight: "bold", // 텍스트 굵기를 굵게 설정
         fontSize: contentsWidth > 1100 ? "23px" : contentsWidth > 900 ? "20px" : contentsWidth > 700 ? "17px" : "15px", // 글자 크기 설정
     };
 
@@ -91,7 +92,7 @@ const Announcement = () => {
                     className={announcementIndex.server}
                     style={{
                         ...indexStyle,
-                        backgroundColor: isFocusedAnnouncement === announcementIndex.server ? "rgba(255, 255, 255, 0.7)" : "rgba(150, 150, 150, 0.7)",
+                        backgroundColor: isFocusedAnnouncement === announcementIndex.server ? "rgba(255, 255, 255, 0.5)" : "rgba(150, 150, 150, 0.5)",
                         borderBottom: isFocusedAnnouncement === announcementIndex.server ? "1px solid white" : "1px solid grey", // 아래 테두리를 흰색으로 설정
                     }}
                     onClick={() => {
@@ -104,7 +105,7 @@ const Announcement = () => {
                     className={announcementIndex.tutorial}
                     style={{
                         ...indexStyle,
-                        backgroundColor: isFocusedAnnouncement === announcementIndex.tutorial ? "rgba(255, 255, 255, 0.7)" : "rgba(150, 150, 150, 0.7)",
+                        backgroundColor: isFocusedAnnouncement === announcementIndex.tutorial ? "rgba(255, 255, 255, 0.5)" : "rgba(150, 150, 150, 0.5)",
                         borderBottom: isFocusedAnnouncement === announcementIndex.tutorial ? "1px solid white" : "1px solid grey", // 아래 테두리를 흰색으로 설정
                     }}
                     onClick={() => {
@@ -126,7 +127,7 @@ const Announcement = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         flexDirection: "row",
-                        backgroundColor: "rgba(255, 255, 255, 0.7)",
+                        backgroundColor: "rgba(255, 255, 255, 0.5)",
                         marginLeft: contentsWidth * 0.01,
                         marginRight: contentsWidth * 0.01,
                         borderBottomLeftRadius: "20px", // 아래쪽 왼쪽 모서리를 둥글게 설정
