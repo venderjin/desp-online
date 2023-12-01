@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import paymentsKey from "../Constants/PaymentsConstants";
 import { AiOutlineCheck } from "react-icons/ai";
+import backEndUri from "../Constants/Constants";
 
 export default function Success() {
     const navigate = useNavigate();
@@ -15,12 +16,72 @@ export default function Success() {
     const orderId = searchParams.get("orderId");
     const amount = searchParams.get("amount");
     const formattedAmount = new Intl.NumberFormat("ko-KR", { currency: "KRW" }).format(amount);
-    // console.log("nickname is", nickname);
-    // console.log("nickname type is", typeof nickname); //string
-    // console.log("orderId is", orderId);
-    // console.log("orderId type is", typeof orderId); //string
-    // console.log("amount is", amount);
-    // console.log("amount type is", typeof amount); //string
+
+    //backEndUri
+    const cashCharge = backEndUri.charge;
+    const cashChargeLog = backEndUri.chargeLog;
+
+    // cash charge
+    async function cashChargeFunction() {
+        const chargeData = {
+            nick_name: nickname,
+            amount: amount,
+        };
+        try {
+            const response = await fetch(cashCharge, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json", // 요청 본문의 데이터 형식 설정 (JSON)
+                },
+                body: JSON.stringify(chargeData), // 데이터 객체를 JSON 문자열로 변환하여 요청 본문에 설정
+            });
+
+            if (!response.ok) {
+                // 응답이 정상이 아닌 경우 오류 처리
+                const errorData = await response.json(); // 오류 응답 데이터 파싱
+                console.error("charge POST 요청 오류:", errorData);
+                return;
+            }
+
+            const json = await response.json();
+            console.log("charge POST 요청 성공", json);
+        } catch (error) {
+            // 오류가 발생한 경우
+            console.error("charge POST 요청 오류:", error);
+        }
+    }
+
+    // cash charge log
+    async function cashChargeLogFunction() {
+        const chargeLogData = {
+            toss_order_number: orderId,
+            nick_name: nickname,
+            amount: amount,
+        };
+        try {
+            console.log("chargeLogData is", chargeLogData);
+            const response = await fetch(cashChargeLog, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json", // 요청 본문의 데이터 형식 설정 (JSON)
+                },
+                body: JSON.stringify(chargeLogData), // 데이터 객체를 JSON 문자열로 변환하여 요청 본문에 설정
+            });
+
+            if (!response.ok) {
+                // 응답이 정상이 아닌 경우 오류 처리
+                const errorData = await response.json(); // 오류 응답 데이터 파싱
+                console.error("log POST 요청 오류:", errorData);
+                return;
+            }
+
+            const json = await response.json();
+            console.log("log POST 요청 성공", json);
+        } catch (error) {
+            // 오류가 발생한 경우
+            console.error("log POST 요청 오류:", error);
+        }
+    }
 
     useEffect(() => {
         const updateSize = () => {
@@ -73,7 +134,9 @@ export default function Success() {
             }
 
             // TODO: 구매 완료 비즈니스 로직 구현
-            // console.log("success ", json);
+            console.log("success ", json);
+            cashChargeLogFunction();
+            cashChargeFunction();
         }
 
         confirm();

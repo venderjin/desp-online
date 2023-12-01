@@ -67,7 +67,7 @@ export default function Payments() {
 
     useEffect(() => {
         setButtonHidden(!(priceCheck && nicknameCheck));
-        console.log("**buttonHidden is**", buttonHidden);
+        // console.log("**buttonHidden is**", buttonHidden);
     }, [priceCheck, nicknameCheck]);
 
     useEffect(() => {

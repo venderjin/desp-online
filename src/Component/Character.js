@@ -136,6 +136,12 @@ const Character = () => {
         display: modalOpen === false ? "none" : "block",
     };
 
+    const characterText = {
+        fontSize: contentsWidth > 1100 ? "25px" : contentsWidth > 900 ? "23px" : contentsWidth > 700 ? "20px" : "18px", // 글자 크기 설정
+        fontWeight: "bold",
+        color: "white",
+    };
+
     return (
         <div ref={contentsRef} className="contents">
             <div style={modalStyle} className="contents">
@@ -166,16 +172,16 @@ const Character = () => {
                         style={{
                             width: contentsWidth > 700 ? contentsWidth * 0.25 : contentsWidth,
                             height: contentsWidth > 700 ? contentsWidth * 0.1 : contentsWidth,
-                            backgroundColor: "rgba(150, 150, 150, 0.7)",
+                            // backgroundColor: "rgba(150, 150, 150, 0.7)",
                             borderRadius: 10,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
                         }}
                     >
-                        <h2>
+                        <p style={characterText}>
                             {CharacterName} - {CharacterRole}
-                        </h2>
+                        </p>
                     </div>
                 </div>
             </div>
