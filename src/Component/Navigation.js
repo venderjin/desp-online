@@ -57,7 +57,11 @@ const Navigation = () => {
     const [activeButton, setActiveButton] = useState("Home");
     const handleButtonClick = (buttonLabel, path) => {
         //path 막기
-        if (buttonLabel === "충전" || buttonLabel === "유저 검색") {
+        // if (buttonLabel === "충전" || buttonLabel === "유저 검색") {
+        //     alert("준비중입니다.");
+        //     return;
+        // }
+        if (buttonLabel === "유저 검색") {
             alert("준비중입니다.");
             return;
         }
