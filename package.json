@@ -1,6 +1,6 @@
 {
     "name": "desp-online",
-    "homepage": "https://desp-online.kr/",
+    "homepage": "http://desp-online.kr/",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
