@@ -59,7 +59,7 @@ export default function Success() {
             amount: amount,
         };
         try {
-            console.log("chargeLogData is", chargeLogData);
+            // console.log("chargeLogData is", chargeLogData);
             const response = await fetch(cashChargeLog, {
                 method: "POST",
                 headers: {
