@@ -4,7 +4,7 @@ import { Ranking, Announcement, banner } from "../Constants/HomeConstants";
 import SiteInfo from "./SiteInfo";
 import { useNavigate } from "react-router-dom";
 import backEndUri from "../Constants/Constants";
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const Home = () => {
     //navBar 사이즈 설정
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
@@ -47,7 +47,7 @@ const Home = () => {
                 return res.json();
             })
             .then((res) => {
-                console.log("res LEVEL is", res);
+                // console.log("res LEVEL is", res);
                 setDataLEVEL(res);
             })
             .catch((error) => {
@@ -173,9 +173,7 @@ const Home = () => {
                     <div style={HomeAnnouncementText}>
                         <p style={HomeText}>{Announcement.name}</p>
                     </div>
-                    <div style={HomeAnnouncementBoxStyle}>
-                        <h3>공지사항</h3>
-                    </div>
+                    <div style={HomeAnnouncementBoxStyle}>{/* <h3>공지사항</h3> */}</div>
                 </div>
             </div>
             <SiteInfo width={contentsWidth} height={contentsHeight} />

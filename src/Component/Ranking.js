@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import backEndUri from "../Constants/Constants";
 import SiteInfo from "./SiteInfo";
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const Ranking = () => {
     const [contentsHeight, setContentsHeight] = useState(100);
     const [contentsWidth, setContentsWidth] = useState(100);
@@ -58,7 +58,7 @@ const Ranking = () => {
                 return res.json();
             })
             .then((res) => {
-                console.log("res LEVEL is", res);
+                // console.log("res LEVEL is", res);
                 setDataLEVEL(res);
             })
             .catch((error) => {
@@ -158,9 +158,9 @@ const Ranking = () => {
                                 <th>순위</th>
                                 <th>닉네임</th>
                                 <th>티어</th>
+                                <th>승</th>
                                 <th>무</th>
                                 <th>패</th>
-                                <th>승</th>
                                 <th>승점</th>
                                 <th>승률</th>
                             </tr>
@@ -181,9 +181,9 @@ const Ranking = () => {
                                         <td style={tdStyle}>{index + 1}</td>
                                         <td style={tdStyle}>{item.nickname}</td>
                                         <td style={tdStyle}>{item.record.tier}</td>
+                                        <td style={tdStyle}>{item.record.victory}</td>
                                         <td style={tdStyle}>{item.record.draw}</td>
                                         <td style={tdStyle}>{item.record.defeat}</td>
-                                        <td style={tdStyle}>{item.record.victory}</td>
                                         <td style={tdStyle}>{item.record.score}</td>
                                         <td style={tdStyle}>{item.record.winRate}</td>
                                     </tr>
@@ -221,7 +221,7 @@ const Ranking = () => {
                                         <td style={tdStyle}>{item.nickname}</td>
                                         <td style={tdStyle}>{item.job}</td>
                                         <td style={tdStyle}>{item.level}</td>
-                                        <td style={tdStyle}>{item.expPercent.toFixed(3)}</td>
+                                        <td style={tdStyle}>{item.expPercent.toFixed(3)}%</td>
                                         <td style={tdStyle}>{item.lastPlayTime}</td>
                                     </tr>
                                 ))}
