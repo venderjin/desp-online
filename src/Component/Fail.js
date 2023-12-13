@@ -10,7 +10,7 @@ const Fail = () => {
     const contentsRef = useRef(null); // 컨텐츠의 ref를 설정
 
     const navigate = useNavigate();
-    const redirect = "/Donation";
+    const redirect = "/NicknameValidation";
 
     useEffect(() => {
         const updateSize = () => {

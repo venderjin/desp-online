@@ -173,9 +173,7 @@ const Home = () => {
                     <div style={HomeAnnouncementText}>
                         <p style={HomeText}>{Announcement.name}</p>
                     </div>
-                    <div style={HomeAnnouncementBoxStyle}>
-                        <h3>공지사항</h3>
-                    </div>
+                    <div style={HomeAnnouncementBoxStyle}>{/* <h3>공지사항</h3> */}</div>
                 </div>
             </div>
             <SiteInfo width={contentsWidth} height={contentsHeight} />
