@@ -221,7 +221,7 @@ const Ranking = () => {
                                         <td style={tdStyle}>{item.nickname}</td>
                                         <td style={tdStyle}>{item.job}</td>
                                         <td style={tdStyle}>{item.level}</td>
-                                        <td style={tdStyle}>{item.expPercent.toFixed(3)}</td>
+                                        <td style={tdStyle}>{item.expPercent.toFixed(3)}%</td>
                                         <td style={tdStyle}>{item.lastPlayTime}</td>
                                     </tr>
                                 ))}

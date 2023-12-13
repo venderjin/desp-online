@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import SiteInfo from "./SiteInfo";
 import { cash, maxPrice } from "../Constants/DonationConstans";
 import { useNavigate, useLocation } from "react-router-dom";
-import chargeTerms from "../Constants/ChargeTerms";
+import chargeTerms from "../Constants/ChargeTermsConstants";
 
 const Donation = () => {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
