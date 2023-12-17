@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import backEndUri from "../Constants/Constants";
 import SiteInfo from "./SiteInfo";
+import tier from "../Constants/TierConstants";
 
 const Ranking = () => {
     const [contentsHeight, setContetnsHeight] = useState(100); // 초기 높이를 100으로 설정
@@ -180,7 +181,7 @@ const Ranking = () => {
         height: contentsHeight / 15,
         // backgroundColor: "#4A4443",
         color: "#4A4443",
-        fontSize: contentsWidth > 1100 ? "18px" : contentsWidth > 900 ? "16px" : contentsWidth > 700 ? "14px" : "13px", // 글자 크기 설정
+        fontSize: contentsWidth > 1100 ? "20px" : contentsWidth > 900 ? "18px" : contentsWidth > 700 ? "16px" : "14px", // 글자 크기 설정
         fontWeight: "bold",
         borderBottom: "1px solid #4A4443",
         paddingLeft: "10px", // 왼쪽 패딩 설정
@@ -188,7 +189,7 @@ const Ranking = () => {
     };
 
     const tdStyle = {
-        fontSize: contentsWidth > 1100 ? "17px" : contentsWidth > 900 ? "15px" : contentsWidth > 700 ? "13px" : "10px", // 글자 크기 설정
+        fontSize: contentsWidth > 1100 ? "20px" : contentsWidth > 900 ? "18px" : contentsWidth > 700 ? "16px" : "14px", // 글자 크기 설정
         textAlign: "center",
         padding: "10px 0",
         color: "#4A4443",
@@ -254,7 +255,16 @@ const Ranking = () => {
                                         <td style={tdStyle}>{data.levelRank.job}</td>
                                         <td style={tdStyle}>LV. {data.levelRank.level}</td>
                                         <td style={tdStyle}>{data.levelRank.expPercent.toFixed(3)} %</td>
-                                        <td style={tdStyle}>{data.playerVersusRecord.tier}</td>
+                                        <td style={{ flexDirection: "column", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                            <img
+                                                src={tier[data.playerVersusRecord.tier]}
+                                                alt={data.playerVersusRecord.tier}
+                                                style={{
+                                                    width: contentsHeight > 600 ? `${contentsHeight / 10}px` : "40px",
+                                                    height: contentsHeight > 600 ? `${contentsHeight / 10}px` : "40px",
+                                                }}
+                                            />
+                                        </td>
                                     </tr>
                                 </tbody>
                                 <thead style={theadStyle}>

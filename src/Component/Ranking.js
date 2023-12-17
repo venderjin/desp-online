@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import backEndUri from "../Constants/Constants";
 import SiteInfo from "./SiteInfo";
+import tier from "../Constants/TierConstants";
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const Ranking = () => {
     const [contentsHeight, setContentsHeight] = useState(100);
@@ -172,7 +174,6 @@ const Ranking = () => {
                                         key={index}
                                         style={{
                                             ...trStyle,
-                                            backgroundColor: hoveredRow === index ? "rgba(200,200,200,0.4)" : "inherit",
                                             fontWeight: hoveredRow === index ? "bold" : "normal",
                                         }}
                                         onMouseEnter={() => handleMouseEnter(index)}
@@ -180,7 +181,18 @@ const Ranking = () => {
                                     >
                                         <td style={tdStyle}>{index + 1}</td>
                                         <td style={tdStyle}>{item.nickname}</td>
-                                        <td style={tdStyle}>{item.record.tier}</td>
+                                        <td style={{ flexDirection: "column", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                            <img
+                                                src={tier[item.record.tier]}
+                                                alt={item.record.tier}
+                                                style={{
+                                                    width: contentsHeight > 600 ? `${contentsHeight / 15}px` : "40px",
+                                                    height: contentsHeight > 600 ? `${contentsHeight / 15}px` : "40px",
+                                                }}
+                                            />
+                                            {item.record.tier}
+                                        </td>
+
                                         <td style={tdStyle}>{item.record.victory}</td>
                                         <td style={tdStyle}>{item.record.draw}</td>
                                         <td style={tdStyle}>{item.record.defeat}</td>
@@ -211,7 +223,6 @@ const Ranking = () => {
                                         key={index}
                                         style={{
                                             ...trStyle,
-                                            backgroundColor: hoveredRow === index ? "rgba(200,200,200,0.4)" : "inherit",
                                             fontWeight: hoveredRow === index ? "bold" : "normal",
                                         }}
                                         onMouseEnter={() => handleMouseEnter(index)}
