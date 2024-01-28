@@ -56,10 +56,10 @@ const Navigation = () => {
     // 현재 활성 버튼을 추적하는 상태
     const [activeButton, setActiveButton] = useState("Home");
     const handleButtonClick = (buttonLabel, path) => {
-        if (buttonLabel == "충전") {
-            alert("준비중인 서비스입니다.")
-            return
-        }
+        // if (buttonLabel == "충전") {
+        //     alert("준비중인 서비스입니다.")
+        //     return
+        // }
         // 현재 활성 버튼을 업데이트
         setActiveButton(buttonLabel);
         navigate(path);

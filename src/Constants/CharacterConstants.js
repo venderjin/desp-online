@@ -15,10 +15,10 @@ const CharacterImgSrc_3 = {
 };
 
 const CharacterPlayVideo = {
-    BELPHEGOR: "4bed7D_jXYo",
-    ENLIL: "PFEUnM1fcIo",
-    REVENANT: "9pQwUo3i7cw",
-    VALKYRIE: "F0DswR9DYro",
+    BELPHEGOR: "oFFFjkFj6G8",
+    ENLIL: "Ii7nLrgDHJM",
+    REVENANT: "EIzj-3TMN5s",
+    VALKYRIE: "dYdnw0NEHxA",
 };
 
 const CharacterExplanation = {
